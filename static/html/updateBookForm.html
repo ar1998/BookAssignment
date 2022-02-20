@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/creation_form.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <form action="/update_book" method="POST">
+            <div class="form-fields">
+                <label class="labels" for="book_name">Book Name</label>
+                <input class="input-fields" type="text" name="book_name" value="{{ book_data['book_name'] }}" required>
+            </div>
+            <div class="form-fields">
+                <label class="labels" for="name">Description</label>
+                <input class="input-fields" type="text" name="book_desc" value="{{ book_data['book_desc'] }}" required>
+            </div>
+            <div class="form-fields">
+                <label class="labels" for="name">count</label>
+                <input class="input-fields" type="number" name="book_count" value="{{ book_data['book_count'] }}" required>
+            </div>
+            <div class="form-fields">
+                <label class="labels" for="google_book_id">Google Book Id</label>
+                <input class="input-fields" type="text" name="google_book_id" value="{{ book_data['google_books_id'] }}" required>
+            </div>
+            
+            <div class="submit">
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

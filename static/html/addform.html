@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>search page</title>
+</head>
+<body>
+    <form class="add-form" action="/add" method="post">
+        <label class="form-element" for="bookname" >Book name:</label><br>
+        <input class="form-element" type="text" id="bookname" name="bookname"/><br>
+
+        <label class="form-element" for="book_desc" >Description:</label><br>
+        <input class="form-element" type="text" id="book_desc" name="book_desc"/><br>
+
+        <label class="form-element" for="book_count" >count:</label><br>
+        <input class="form-element" type="number" id="book_count" name="book_count"/><br>
+
+        <label class="form-element" for="google_book_id" >Google book id:</label><br>
+        <input class="form-element" type="text" id="google_book_id" name="google_book_id"/><br>
+
+        <button class="form-element" type="submit" onclick="(event) => handleSearch(event)" id="searchbutton"value="add">Add</button>
+      </form> 
+      
+      <link rel="stylesheet" href="{{ url_for('static', path='style/addform.css') }}">
+</body>
+</html>
+{% endblock %}

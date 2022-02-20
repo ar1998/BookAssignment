@@ -11,7 +11,7 @@ class Book(Base):
     name = Column(String(80), nullable=False, unique=True,index=True)
     description = Column(String(200))
     google_books = Column(String(20),nullable=False)
-    count = column(Integer)
+    count = Column(Integer)
     def __repr__(self):
         return 'ItemModel(name=%s, description=%s,google_books=%s)' % (self.name, self.description,self.google_books)
     

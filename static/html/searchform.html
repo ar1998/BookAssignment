@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>search page</title>
+</head>
+<body>
+    <form class="search-form" action="/search" method="post">
+        <label class="form-element" for="booknname" >Book name:</label><br>
+        <input class="form-element" type="text" id="bookname" name="bookname"/><br>
+        <button class="form-element" type="submit" onclick="(event) => handleSearch(event)" id="searchbutton"value="Search">Search</button>
+      </form> 
+      
+      <link rel="stylesheet" href="{{ url_for('static', path='style/searchform.css') }}">
+</body>
+</html>
+{% endblock %}
