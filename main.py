@@ -27,20 +27,6 @@ app.include_router(books.router)
 templates = Jinja2Templates(directory="static/html")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-origins = [
-    "http://localhost",
-    "http://localhost:8000"
-    "http://localhost:8080",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 models.Base.metadata.create_all(bind=engine)
 
 # method for rendering new book addition form
@@ -72,8 +58,19 @@ async def get_all_books(request: Request,db: Session = Depends(get_db)):
     
 
 
-@app.delete('/books/{google_book_id}', tags=["Book"])
-async def delete_book(google_book_id: str,db: Session = Depends(get_db)):
+@app.get('/delete', tags=["books"])
+async def delete_book(request: Request,db: Session = Depends(get_db)):
+    """
+    displays dropdown to select Book to Delete
+    """
+    books = BookRepo.fetch_all(db)
+    return templates.TemplateResponse("deleteDropDown.html", {
+        "request": request,
+        "books": books
+        })
+
+@app.post('/delete', tags=["books"])
+async def delete_book(request: Request,google_book_id:str = Form(...),db: Session = Depends(get_db)):
     """
     Delete the Book with the given ID provided by User stored in database
     """
@@ -82,9 +79,9 @@ async def delete_book(google_book_id: str,db: Session = Depends(get_db)):
     if db_item is None:
         raise HTTPException(status_code=404, detail="Book not found with the given ID")
     await BookRepo.delete(db,db_item_id)
-    return "Item deleted successfully!"
+    return templates.TemplateResponse("base.html",{"request":request})
 
-@app.get("/update")
+@app.get("/update",tags=["books"])
 def render_selection_menu(request: Request, db: Session = Depends(get_db)):
     """
     displays dropdown to select Book to update
@@ -95,7 +92,7 @@ def render_selection_menu(request: Request, db: Session = Depends(get_db)):
         "books": books
         })
 
-@app.post('/update')
+@app.post('/update',tags=["books"])
 def render_update_form(request: Request,book_name:str = Form(...),db: Session = Depends(get_db)):
     item = BookRepo.fetch_by_name(db,book_name)
     book_data = {"book_name":item.name,
@@ -105,10 +102,11 @@ def render_update_form(request: Request,book_name:str = Form(...),db: Session = 
     # return book_data
     return templates.TemplateResponse("updateBookForm.html",{"request":request,"book_data":book_data})
 
-@app.post("/update_book")
+@app.post("/update_book",tags=["books"])
 def update_book(request: Request,book_name:str = Form(...), book_desc:str = Form(...),book_count:int = Form(...), google_book_id:str = Form(...),db : Session = Depends(get_db)):
     book = BookRepo.fetch_by_google_books(db,google_book_id)
-    return BookRepo.update_UI(db,book_name,book_desc,book_count,google_book_id)
+    resp = BookRepo.update_UI(db,book_name,book_desc,book_count,google_book_id)
+    return templates.TemplateResponse("base.html",{"request":request})
 
 
 api_key = "AIzaSyBx3YE4jp9gSfel-bbkBir5m2mV4hqaLZE"
@@ -117,7 +115,7 @@ api_key = "AIzaSyBx3YE4jp9gSfel-bbkBir5m2mV4hqaLZE"
 def render_search_form(request: Request):
     return templates.TemplateResponse("searchform.html",context = {"request": request})
 
-@app.post('/search')
+@app.post('/search',tags=["books"])
 def search_book(request: Request,db: Session = Depends(get_db),
                 bookname:str = Form(...)):
     print("-----")

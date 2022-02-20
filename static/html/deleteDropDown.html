@@ -8,11 +8,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h3>select id Modify</h3>
-    <form action="/update" method="post">
-        <select name="book_name">
+    <h3>select id Delete</h3>
+    <form action="/delete" method="post">
+        <select name="google_book_id">
             {% for book in books %}
-            <option value="{{ book['name'] }}">{{ book['name'] }}</option>
+            <option value="{{ book['google_books'] }}">{{ book['name'] }}</option>
             {% endfor %}
         </select>
         <button type="submit">Select</button>
