@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 from database import Base
     
+# creating Model to map to Book database using ORM
 class Book(Base):
     __tablename__ = "books"
     
@@ -15,11 +16,3 @@ class Book(Base):
     def __repr__(self):
         return 'ItemModel(name=%s, description=%s,google_books=%s)' % (self.name, self.description,self.google_books)
     
-# class Store(Base):
-#     __tablename__ = "stores"
-#     id = Column(Integer, primary_key=True,index=True)
-#     name = Column(String(80), nullable=False, unique=True)
-#     items = relationship("Item",primaryjoin="Store.id == Item.store_id",cascade="all, delete-orphan")
-
-#     def __repr__(self):
-#         return 'Store(name=%s)' % self.name

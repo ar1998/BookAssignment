@@ -11,5 +11,5 @@ RUN apk add --no-cache supervisor \
     && pip install -r /requirements.txt
 
 
+# uncomment this lines when running as container locally
 # CMD ["python3", "main.py"]
-# EXPOSE 8000

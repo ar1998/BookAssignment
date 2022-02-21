@@ -3,6 +3,9 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+"""
+This Files contains the Schema for response models of the functions
+"""
 
 class BookBase(BaseModel):
     name: str
@@ -21,19 +24,6 @@ class Book(BookBase):
     class Config:
         orm_mode = True
 
-
-# class StoreBase(BaseModel):
-#     name: str
-
-# class StoreCreate(StoreBase):
-#     pass
-
-# class Store(StoreBase):
-#     id: int
-#     items: List[Item] = []
-
-#     class Config:
-#         orm_mode = True
 
 class BookSearch(BaseModel):
     google_book_id: Optional[str]
